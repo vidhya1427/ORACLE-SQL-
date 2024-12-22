@@ -1,0 +1,134 @@
+1) SELECT COUNT(*) AS total_employees
+   FROM emp;
+2) SELECT COUNT(*) AS total_department
+   FROM dept;
+3) select * from emp;
+4) select * from dept;
+5) SELECT SUM(sal) AS total_salary
+   FROM emp;
+6) SELECT SUM(comm) AS total_comm
+   FROM emp;
+7) SELECT job, SUM(comm) AS total_commission
+   FROM emp
+   GROUP BY job
+   HAVING SUM(comm) > 0;
+8) SELECT SYSDATE FROM DUAL;
+9) SELECT AVG(SAL) AS AVERAGE_SALARY
+   FROM EMP;
+10) SELECT d.deptno, d.dname, COUNT(e.empno) AS num_employees
+    FROM dept d
+    LEFT JOIN emp e ON d.deptno = e.deptno
+    GROUP BY d.deptno, d.dname;
+11) SELECT 
+    d.dname AS department_name, 
+    SUM(e.sal) AS total_salary
+    FROM 
+    emp e
+    JOIN 
+    dept d
+    ON 
+    e.deptno = d.deptno
+    GROUP BY 
+    d.dname;
+12) SELECT JOB, COUNT(*) AS EMPLOYEE_COUNT
+    FROM EMP
+    GROUP BY JOB
+    ORDER BY JOB;
+13) SELECT 
+    JOB, 
+    AVG(SAL) AS AVG_SALARY
+    FROM 
+    EMP
+    GROUP BY 
+    JOB
+    ORDER BY 
+    AVG_SALARY DESC;
+14) SELECT 
+    ename AS Employee_Name,
+    TO_CHAR(hiredate, 'DD') AS Hire_Day,
+    TO_CHAR(hiredate, 'MM') AS Hire_Month,
+    TO_CHAR(hiredate, 'YYYY') AS Hire_Year
+    FROM emp;
+15) SELECT e.empno, e.ename, e.job, e.sal, d.deptno, d.dname 
+    FROM emp e
+    JOIN dept d ON e.deptno = d.deptno
+    ORDER BY d.deptno, e.ename;
+16) SELECT * FROM emp
+    ORDER BY job;
+17) SELECT * FROM emp
+    ORDER BY sal DESC;
+18) SELECT * FROM emp
+    ORDER BY deptno ASC, sal DESC;
+19) SELECT COUNT(*) AS six_char_names
+    FROM emp
+    WHERE LENGTH(ename) = 6;   
+20) SELECT MAX(sal) AS max_salary, MIN(sal) AS min_salary
+    FROM emp;
+21) SELECT 
+    d.dname AS Department_Name, 
+    MAX(e.sal) AS Max_Salary, 
+    MIN(e.sal) AS Min_Salary, 
+    AVG(e.sal) AS Avg_Salary, 
+    SUM(e.sal) AS Total_Salary
+    FROM 
+    emp e
+    JOIN 
+    dept d ON e.deptno = d.deptno
+    GROUP BY 
+    d.dname;
+22) SELECT * FROM emp
+    ORDER BY hiredate;
+23) SELECT * FROM emp
+    ORDER BY HIREDATE DESC
+    FETCH FIRST 1 ROW ONLY;
+24) SELECT ename, hiredate 
+    FROM emp
+    WHERE hiredate = (SELECT MIN(hiredate) FROM emp);
+25) SELECT emp.*, dept.dname
+    FROM emp
+    JOIN dept ON emp.deptno = dept.deptno
+    ORDER BY EXTRACT(YEAR FROM emp.hiredate) DESC, dept.dname ASC;
+26) SELECT empno, ename, sal
+    FROM emp
+    WHERE sal >= (SELECT AVG(sal) FROM emp);
+27) SELECT empno, ename, sal
+    FROM emp
+    WHERE sal <= (SELECT AVG(sal) FROM emp);
+28) SELECT * FROM emp
+    WHERE sal BETWEEN 2000 AND 4000;
+29) SELECT *
+    FROM emp
+    WHERE sal = (SELECT MAX(sal) FROM emp);
+    SELECT *
+    FROM emp
+    WHERE sal = (SELECT MAX(sal) FROM emp);
+30) SELECT COUNT(*) AS gifts_to_buy
+    FROM emp
+    WHERE TO_CHAR(hiredate, 'MM') = TO_CHAR(ADD_MONTHS(SYSDATE, 1), 'MM');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
