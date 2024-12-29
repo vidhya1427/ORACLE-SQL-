@@ -1,0 +1,129 @@
+-- # car database
+select * from continents;  
+select * from countries; 
+select * from car_makers;  
+select * from model_details;  
+select * from car_names;  
+select * from car_details; 
+
+
+ 1) SELECT countryname, continent
+FROM countries
+ORDER BY continent;
+
+2) select co.continent, count(c.countryid) as number_of_countries
+from countries c
+join continents co on c.continent = co.contid
+group by co.continent;
+
+3) select c.countryname
+from countries c
+left join car_makers cm on c.countryid = cm.country
+where cm.id is null
+order by 1;
+
+4) SELECT cm.MAKER, c.COUNTRYNAME
+FROM car_makers cm
+JOIN countries c ON cm.COUNTRY = c.COUNTRYID
+WHERE c.COUNTRYNAME = 'japan';
+
+5) select c.countryname, cm.fullname
+from countries c
+left join car_makers cm on cm.country = c.countryid
+where cm.country = 1  or cm.country = 3;
+
+6) select c.countryname, co.continent
+from car_makers cm
+join countries c on cm.country = c.countryid
+join continents co on c.continent = co.contid
+where cm.maker = 'volvo';
+
+7) select md.model, cn.descr as model_description
+from car_makers m
+join model_details md on m.id = md.maker
+join car_names cn on md.modelid = cn.id
+where m.fullname = 'Ford Motor Company'
+order by 1;
+
+8) select count(md.modelid) as number_of_models
+from model_details md
+join car_makers cm on md.maker = cm.id
+join countries c on cm.country = c.countryid
+where c.countryname = 'germany';
+
+9) select c.countryname,  md.model, cm.fullname , cm.id 
+from car_makers cm
+join countries c on cm.country = c.countryid
+join model_details md on cm.id = md.maker
+where c.countryname = 'japan';
+
+10) select
+min(cd.mpg) as Min_MPG, min(cd.mpg) as Max_MPG,
+min(cd.cylinders) as Min_Cylinders, MAX(cd.cylinders) as Max_Cylinders,
+min(cd.edispl) as Min_Edispl, MAX(cd.edispl) as Max_Edispl,
+min(cd.horsepower) as Min_Horsepower, MAX(cd.horsepower) as Max_Horsepower,
+min(cd.weight) as Min_Weight, MAX(cd.weight) as Max_Weight,
+min(cd.accel) as Min_Accel, MAX(cd.accel) as Max_Accel,
+cm.fullname, cy.countryname, ct.continent
+from car_details cd 
+left join car_names cn 
+on cd.id = cn.id 
+left join model_details md 
+on cn.model = md.model 
+left join car_makers cm 
+on md.maker = cm.id 
+left join countries cy 
+on cm.country = cy.countryid 
+left join continents ct 
+on cy.continent = ct.contid
+group by  
+grouping sets (
+(cn.model, cm.fullname, cy.countryname, ct.continent),
+()
+);
+
+11) select year, count(*) as number_of_cars
+from car_details
+group by year
+order by number_of_cars desc
+fetch first 1 rows only;
+
+12) select year, count(*) as number_of_cars
+from car_details
+group by year
+order by number_of_cars desc
+fetch first 1 rows only;
+
+13) select min(mpg) as min_mpg, max(mpg) as max_mpg, avg(mpg) as avg_mpg from car_details;
+select min(cylinders) as min_cylinders, max(cylinders) as max_cylinders, avg(cylinders) as avg_cylinders from car_details;
+select min(edispl) as min_edispl, max(edispl) as max_edispl, avg(edispl) as avg_edispl from car_details;
+select min(horsepower) as min_horsepower, max(horsepower) as max_horsepower, avg(horsepower) as avg_horsepower from car_details;
+select min(weight) as min_weight, max(weight) as max_weight, avg(weight) as avg_weight from car_details;
+select  min(accel) as min_accel, max(accel) as max_accel, avg(accel) as avg_accel from car_details;
+
+14) select 
+    avg(horsepower) as mean_horsepower,
+    percentile_cont(0.5) within group (order by horsepower) as median_horsepower,
+    stddev(horsepower) as stddev_horsepower
+from car_details;
+select 
+    avg(weight) as mean_weight,
+    percentile_cont(0.5) within group (order by weight) as median_weight,
+    stddev(weight) as stddev_weight
+from car_details;
+select 
+    avg(accel) as mean_accel,
+    percentile_cont(0.5) within group (order by accel) as median_accel,
+    stddev(accel) as stddev_accel
+from car_details;
+
+15) SNO.   TABLE NAME        PRIMARY KEY      FORIEGN KEY      REFERENTIAL TABLE      PRIMARY KEY IN REFRENTIAL TABLE
+ 1)    Continents        ContID         
+ 2)    Countries         CountryID        Continent        Continents             ContID
+ 3)    Car_Makers        ID               Country          Countries              CountryID
+ 4)    Model_Details     ModelID          Maker            Car_Makers             ID
+ 5)    Car_Names         ID               Model            Model_Details          ModelID
+ 6)    Car_Details       ID               ID               Car_Names              ID
+
+
+
